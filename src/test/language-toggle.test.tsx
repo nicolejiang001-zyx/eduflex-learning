@@ -32,7 +32,7 @@ describe("Language toggle", () => {
   it("opens in Chinese and swaps the whole page to the supplied English copy", () => {
     renderPage();
 
-    expect(screen.getByText("量身定制专属方案，")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toContain("量身定制专属方案，");
     expect(screen.getByRole("button", { name: "立即预约" })).toBeInTheDocument();
 
     toEnglish();
