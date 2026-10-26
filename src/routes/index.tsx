@@ -114,8 +114,8 @@ function Index() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <figure className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
           <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,1.62fr)] md:items-stretch md:gap-12">
-            <div className="flex h-full flex-col items-center justify-center gap-6">
-              <span aria-hidden="true" className="font-display text-[5.5rem] font-extrabold leading-[0.6] text-accent md:text-[9rem]">
+            <div className="flex h-full flex-col items-center justify-center gap-2">
+              <span aria-hidden="true" className="font-display text-[5.5rem] font-extrabold leading-[0.6] text-accent md:text-[10rem]">
                 {"\u201C"}
               </span>
               <span className="hidden font-display text-sm font-semibold tracking-[0.35em] text-primary/70 [writing-mode:vertical-rl] [text-orientation:upright] md:block">
