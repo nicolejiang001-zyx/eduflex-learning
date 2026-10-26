@@ -12,8 +12,6 @@ import {
   GraduationCap,
   Briefcase,
   ArrowRight,
-  UserRound,
-  Quote,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -114,31 +112,29 @@ function Index() {
 
       {/* Message from the Director */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
-          <div className="grid items-center gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-14">
-            {/* 主理人头像占位图：替换为真实照片即可 */}
-            <div className="mx-auto w-full max-w-xs">
-              <div className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-4 rounded-[1.75rem] border border-border bg-card shadow-soft">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent/10 text-accent">
-                  <UserRound className="h-10 w-10" />
-                </div>
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">主理人头像 · 待替换</p>
-              </div>
+        <figure className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
+          <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,1.62fr)] md:items-stretch md:gap-12">
+            <div className="flex items-start justify-center md:justify-start">
+              <span aria-hidden="true" className="font-display text-[6rem] font-extrabold leading-[0.7] text-accent md:text-[9rem]">
+                {"\u201C"}
+              </span>
             </div>
 
-            <div>
+            <blockquote className="md:border-l md:border-border md:pl-12">
               <p className="text-sm font-semibold tracking-widest text-accent">MESSAGE FROM THE DIRECTOR</p>
               <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-primary md:text-4xl">
                 教育的质量，藏在看不见的细节里。
               </h2>
-              <Quote className="mt-6 h-8 w-8 text-accent/40" />
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
                 你好，我是 EduFlex 的主理人。在 EduFlex，“个性化”绝不是空话。每一份量身定制的学习计划，都是我和前线老师反复打磨的成果。您的孩子，由我亲自负责质量把关。
               </p>
-              <p className="mt-6 font-display text-sm font-semibold text-primary">— EduFlex 主理人</p>
-            </div>
+              <figcaption className="mt-8 flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-10 bg-accent" />
+                <span className="font-display text-sm font-semibold text-primary">EduFlex 主理人</span>
+              </figcaption>
+            </blockquote>
           </div>
-        </div>
+        </figure>
       </section>
 
       {/* Paths */}
