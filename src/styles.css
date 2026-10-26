@@ -171,3 +171,11 @@
   &:focus { border-color: var(--accent); }
 }
 @layer base { body { font-family: var(--font-sans); } }
+@layer base { html { scroll-behavior: smooth; } }
+@keyframes fade-swap {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@utility fade-swap {
+  animation: fade-swap 0.35s ease;
+}
