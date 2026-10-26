@@ -75,7 +75,7 @@ function Index() {
             <a href="#paths" className="transition-colors hover:text-accent">{c.nav.paths}</a>
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex w-full items-center justify-end gap-4 md:w-auto">
             <a href="#contact" className="text-sm font-medium text-primary transition-colors hover:text-accent">
               {c.nav.contact}
             </a>
