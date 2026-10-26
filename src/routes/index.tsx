@@ -42,7 +42,10 @@ function Index() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(form);
-    if (!r.success) return toast.error(r.error.issues[0].message);
+    if (!r.success) {
+      toast.error(r.error.issues[0]?.message ?? "请检查表单");
+      return;
+    }
     toast.success("预约成功！我们将尽快与您联系。");
     setForm({ name: "", email: "", age: "" });
   };
