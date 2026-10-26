@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast, Toaster } from "sonner";
 import {
@@ -13,6 +13,8 @@ import {
   Briefcase,
   ArrowRight,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { copy, type Lang } from "@/lib/content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,160 +30,187 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const features = [
-  { icon: ShieldCheck, title: "100% 满意承诺", desc: "拒绝试课套路。不满意无限次免费试，直到遇见专属好老师。" },
-  { icon: Globe2, title: "全球经验 本土严选", desc: "100% 中国本土严选师资，深谙海外孩子痛点，发音纯正。" },
-  { icon: ShoppingBag, title: "按需购课 零捆绑", desc: "课前15分钟免费取消。不强制推销大课包，随学随退。" },
-  { icon: BookMarked, title: "拒绝“水土不服”", desc: "精选《轻松学中文》《HSK》等实用教材。支持自带教材，100% 无缝定制。" },
-];
-
-const paths = [
-  { icon: Sparkles, age: "4-7岁", title: "低龄趣味启蒙", desc: "专治“坐不住”。通过强互动与游戏化引导，把中文变成有趣的探索。" },
-  { icon: BookOpen, age: "8-14岁", title: "中小学高效提升", desc: "专治“学了忘、写作难”。拒绝死记硬背，梳理底层逻辑，攻克阅读与写作难关。" },
-  { icon: GraduationCap, age: "15-18岁", title: "高阶中文与考级辅导", desc: "兼顾语言深造与考级需求。针对 VCE、AP 及 HSK 提供高质量查漏补缺与作文精批，助力冲刺高分。" },
-  { icon: Briefcase, age: "18岁+", title: "成人实用与商务中文", desc: "根据真实生活与职业规划量身定制。跳过死板教科书，直接匹配实用场景，让每一次开口都成为加分项。" },
-];
-
-const ageOptions = [
-  { value: "4-7", label: "4-7岁 · 低龄趣味启蒙" },
-  { value: "8-14", label: "8-14岁 · 中小学高效提升" },
-  { value: "15-18", label: "15-18岁 · 高阶中文与考级辅导" },
-  { value: "18+", label: "18岁+ · 成人实用与商务中文" },
-];
-
-const schema = z.object({
-  name: z.string().trim().min(1, "请填写姓名").max(100),
-  email: z.string().trim().email("请输入有效邮箱").max(255),
-  age: z.string().min(1, "请选择年龄段"),
-});
+const featureIcons = [ShieldCheck, Globe2, ShoppingBag, BookMarked];
+const pathIcons = [Sparkles, BookOpen, GraduationCap, Briefcase];
 
 function Index() {
+  const [lang, setLang] = useState<Lang>("zh");
   const [form, setForm] = useState({ name: "", email: "", age: "" });
+  const c = copy[lang];
+
+  useEffect(() => {
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+  }, [lang]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    const schema = z.object({
+      name: z.string().trim().min(1, c.toast.name).max(100),
+      email: z.string().trim().email(c.toast.email).max(255),
+      age: z.string().min(1, c.toast.age),
+    });
     const r = schema.safeParse(form);
     if (!r.success) {
       toast.error(r.error.issues[0]?.message ?? "请检查表单");
       return;
     }
-    toast.success("预约成功！我们将尽快与您联系。");
+    toast.success(c.toast.success);
     setForm({ name: "", email: "", age: "" });
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Toaster position="top-center" />
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="font-display text-lg font-bold text-primary">
-          EduFlex <span className="text-accent">Learning</span>
-          <span className="ml-2 text-sm font-medium text-muted-foreground">灵动教育</span>
-        </div>
-        <a href="#contact" className="hidden text-sm font-medium text-primary hover:text-accent sm:block">预约试听</a>
-      </header>
-
-      {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-16 text-center md:pt-28">
-        <span className="inline-block rounded-full bg-secondary px-4 py-1.5 text-xs font-medium text-primary">海外华裔青少儿 · 成人中文学习</span>
-        <h1 className="mx-auto mt-8 max-w-3xl font-display text-4xl font-bold leading-tight text-primary md:text-6xl">
-          量身定制专属方案，<br className="hidden md:block" />
-          让孩子<span className="text-accent">自信开口</span>说中文！
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-          100% 中国本土严选师资，专注海外华裔青少儿中文教育，兼顾成人专属定制。
-        </p>
-        <a href="#contact" className="btn-cta mt-10">
-          获取免费专属试听 <ArrowRight className="h-5 w-5" />
-        </a>
-      </section>
-
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-          {features.map((f) => (
-            <div key={f.title} className="card-soft">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent">
-                <f.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-6 text-xl font-semibold text-primary">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Message from the Director */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <figure className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
-          <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,1.62fr)] md:items-stretch md:gap-12">
-            <div className="flex h-full flex-col items-center justify-center gap-2">
-              <span aria-hidden="true" className="font-display text-[5.5rem] font-extrabold leading-[0.6] text-accent md:text-[10rem]">
-                {"\u201C"}
-              </span>
-              <span className="hidden font-display text-sm font-semibold tracking-[0.35em] text-primary/70 [writing-mode:vertical-rl] [text-orientation:upright] md:block">
-                主理人的话
-              </span>
-            </div>
-
-            <blockquote className="md:border-l md:border-border md:pl-12">
-              <p className="text-sm font-semibold tracking-widest text-accent">MESSAGE FROM THE DIRECTOR</p>
-              <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-primary md:text-4xl">
-                教育的质量，藏在看不见的细节里。
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-                你好，我是 EduFlex 的主理人。在 EduFlex，“个性化”绝不是空话。每一份量身定制的学习计划，都是我和前线老师反复打磨的成果。您的孩子，由我亲自负责质量把关。
-              </p>
-              <figcaption className="mt-8 flex items-center gap-3">
-                <span aria-hidden="true" className="h-px w-10 bg-accent" />
-                <span className="font-display text-sm font-semibold text-primary">EduFlex 主理人</span>
-              </figcaption>
-            </blockquote>
+      <div key={lang} className="fade-swap">
+        {/* Navbar */}
+        <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 py-6">
+          <div className="font-display text-lg font-bold text-primary">
+            EduFlex <span className="text-accent">Learning</span>
+            <span className="ml-2 text-sm font-medium text-muted-foreground">灵动教育</span>
           </div>
-        </figure>
-      </section>
 
-      {/* Paths */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="text-center">
-          <p className="text-sm font-semibold tracking-widest text-accent">LEARNING PATHS</p>
-          <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">定制方向</h2>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {paths.map((p) => (
-            <div key={p.title} className="card-soft group flex h-full flex-col">
-              <div className="flex items-center justify-between">
-                <p.icon className="h-7 w-7 text-primary" />
-                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-primary">{p.age}</span>
-              </div>
-              <h3 className="mt-6 text-lg font-semibold leading-snug text-primary">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+          <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
+            <a href="#features" className="transition-colors hover:text-accent">{c.nav.features}</a>
+            <a href="#director" className="transition-colors hover:text-accent">{c.nav.director}</a>
+            <a href="#paths" className="transition-colors hover:text-accent">{c.nav.paths}</a>
+          </nav>
 
-      {/* Contact */}
-      <section id="contact" className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rounded-[2rem] bg-primary px-6 py-14 shadow-soft md:px-16">
-          <div className="mx-auto max-w-xl text-center">
-            <h2 className="font-display text-3xl font-bold text-primary-foreground">预约免费试听</h2>
-            <p className="mt-3 text-sm text-primary-foreground/70">留下信息，课程顾问将在 24 小时内联系您。</p>
-          </div>
-          <form onSubmit={submit} className="mx-auto mt-10 grid max-w-xl gap-4">
-            <input className="field" placeholder="姓名" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            <input className="field" type="email" placeholder="邮箱" maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-            <select className="field" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })}>
-              <option value="">选择年龄段</option>
-              {ageOptions.map((o) => (
-                <option key={o.value} value={o.value}>{o.label}</option>
+          <div className="flex items-center gap-4">
+            <a href="#contact" className="hidden text-sm font-medium text-primary transition-colors hover:text-accent sm:block">
+              {c.nav.contact}
+            </a>
+            <div role="group" aria-label="Language / 语言" className="flex items-center rounded-full border border-border bg-card p-1 shadow-soft">
+              {(["zh", "en"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  aria-pressed={lang === l}
+                  onClick={() => setLang(l)}
+                  className={cn(
+                    "rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors",
+                    lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-accent",
+                  )}
+                >
+                  {l === "zh" ? "中" : "EN"}
+                </button>
               ))}
-            </select>
-            <button type="submit" className="btn-cta mt-2 w-full">立即预约</button>
-          </form>
-        </div>
-      </section>
+            </div>
+          </div>
+        </header>
 
-      <footer className="py-10 text-center text-xs text-muted-foreground">© 2026 EduFlex Learning 灵动教育</footer>
+        {/* Hero */}
+        <section className="mx-auto max-w-6xl px-6 pb-24 pt-16 text-center md:pt-28">
+          <span className="inline-block rounded-full bg-secondary px-4 py-1.5 text-xs font-medium text-primary">{c.hero.badge}</span>
+          <h1 className="mx-auto mt-8 max-w-3xl font-display text-4xl font-bold leading-tight text-primary md:text-6xl">
+            {c.hero.titleA}
+            <br className="hidden md:block" />
+            {c.hero.titleB1}
+            <span className="text-accent">{c.hero.titleAccent}</span>
+            {c.hero.titleB2}
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">{c.hero.desc}</p>
+          <a href="#contact" className="btn-cta mt-10">
+            {c.hero.cta} <ArrowRight className="h-5 w-5" />
+          </a>
+        </section>
+
+        {/* Features */}
+        <section id="features" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
+          <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+            {c.features.map((f, i) => {
+              const Icon = featureIcons[i] ?? ShieldCheck;
+              return (
+                <div key={f.title} className="card-soft">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-6 text-xl font-semibold text-primary">{f.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Message from the Director */}
+        <section id="director" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
+          <figure className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
+            <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,1.62fr)] md:items-stretch md:gap-12">
+              <div className="flex h-full flex-col items-center justify-center gap-2">
+                <span aria-hidden="true" className="font-display text-[5.5rem] font-extrabold leading-[0.6] text-accent md:text-[10rem]">
+                  {"\u201C"}
+                </span>
+                <span
+                  className={cn(
+                    "hidden font-display text-sm font-semibold tracking-[0.35em] text-primary/70 [writing-mode:vertical-rl] md:block",
+                    lang === "zh" && "[text-orientation:upright]",
+                  )}
+                >
+                  {c.director.vertical}
+                </span>
+              </div>
+
+              <blockquote className="md:border-l md:border-border md:pl-12">
+                <p className="text-sm font-semibold tracking-widest text-accent">{c.director.eyebrow}</p>
+                <h2 className="mt-3 font-display text-2xl font-bold leading-snug text-primary md:text-4xl">
+                  {c.director.heading}
+                </h2>
+                <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">{c.director.body}</p>
+                <figcaption className="mt-8 flex items-center gap-3">
+                  <span aria-hidden="true" className="h-px w-10 bg-accent" />
+                  <span className="font-display text-sm font-semibold text-primary">{c.director.sign}</span>
+                </figcaption>
+              </blockquote>
+            </div>
+          </figure>
+        </section>
+
+        {/* Learning Paths */}
+        <section id="paths" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
+          <div className="text-center">
+            <p className="text-sm font-semibold tracking-widest text-accent">{c.paths.label}</p>
+            <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">{c.paths.heading}</h2>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {c.paths.list.map((p, i) => {
+              const Icon = pathIcons[i] ?? Sparkles;
+              return (
+                <div key={p.title} className="card-soft flex h-full flex-col">
+                  <div className="flex items-center justify-between">
+                    <Icon className="h-7 w-7 text-primary" />
+                    <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-primary">{p.age}</span>
+                  </div>
+                  <h3 className="mt-6 text-lg font-semibold leading-snug text-primary">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
+          <div className="rounded-[2rem] bg-primary px-6 py-14 shadow-soft md:px-16">
+            <div className="mx-auto max-w-xl text-center">
+              <h2 className="font-display text-3xl font-bold text-primary-foreground">{c.contact.heading}</h2>
+              <p className="mt-3 text-sm text-primary-foreground/70">{c.contact.hint}</p>
+            </div>
+            <form onSubmit={submit} className="mx-auto mt-10 grid max-w-xl gap-4">
+              <input className="field" placeholder={c.contact.name} maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <input className="field" type="email" placeholder={c.contact.email} maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <select className="field" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })}>
+                <option value="">{c.contact.agePlaceholder}</option>
+                {c.contact.ages.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+              <button type="submit" className="btn-cta mt-2 w-full">{c.contact.submit}</button>
+            </form>
+          </div>
+        </section>
+
+        <footer className="py-10 text-center text-xs text-muted-foreground">{c.footer}</footer>
+      </div>
     </div>
   );
 }
