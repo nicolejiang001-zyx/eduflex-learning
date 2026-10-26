@@ -114,10 +114,11 @@ function Index() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <figure className="rounded-[2rem] bg-secondary px-6 py-12 shadow-soft md:px-12 md:py-16">
           <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,1.62fr)] md:items-stretch md:gap-12">
-            <div className="flex items-start justify-center md:justify-start">
-              <span aria-hidden="true" className="font-display text-[6rem] font-extrabold leading-[0.7] text-accent md:text-[9rem]">
+            <div className="flex h-full flex-col items-center justify-center gap-5">
+              <span aria-hidden="true" className="font-display text-[6rem] font-extrabold leading-[0.7] text-accent md:text-[11rem]">
                 {"\u201C"}
               </span>
+              <span aria-hidden="true" className="h-14 w-px bg-accent/30 md:h-24" />
             </div>
 
             <blockquote className="md:border-l md:border-border md:pl-12">
