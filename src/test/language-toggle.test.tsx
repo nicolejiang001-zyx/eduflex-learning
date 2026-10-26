@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Route } from "@/routes/index";
+import { Index } from "@/routes/index";
 import { copy } from "@/lib/content";
 
 // The English wording below is the user's own brief; it must stay verbatim.
@@ -21,7 +21,7 @@ const BRIEF_EN = {
 };
 
 function renderPage() {
-  return render(<Route.component />);
+  return render(<Index />);
 }
 
 function toEnglish() {

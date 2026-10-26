@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
 const featureIcons = [ShieldCheck, Globe2, ShoppingBag, BookMarked];
 const pathIcons = [Sparkles, BookOpen, GraduationCap, Briefcase];
 
-function Index() {
+export function Index() {
   const [lang, setLang] = useState<Lang>("zh");
   const [form, setForm] = useState({ name: "", email: "", age: "" });
   const c = copy[lang];
