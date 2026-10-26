@@ -76,7 +76,7 @@ function Index() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <a href="#contact" className="hidden text-sm font-medium text-primary transition-colors hover:text-accent sm:block">
+            <a href="#contact" className="text-sm font-medium text-primary transition-colors hover:text-accent">
               {c.nav.contact}
             </a>
             <div role="group" aria-label="Language / 语言" className="flex items-center rounded-full border border-border bg-card p-1 shadow-soft">
