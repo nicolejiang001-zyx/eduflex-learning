@@ -35,27 +35,94 @@ const pathIcons = [Sparkles, BookOpen, GraduationCap, Briefcase];
 
 export function Index() {
   const [lang, setLang] = useState<Lang>("zh");
-  const [form, setForm] = useState({ name: "", email: "", age: "" });
+  const [form, setForm] = useState({
+    course: "",
+    name: "",
+    email: "",
+    age: "",
+    gender: "",
+    location: "",
+    chineseComm: "",
+    pinyin: "",
+    proficiency: "",
+    teacherType: "",
+    hobbies: "",
+    trialTime: "",
+  });
   const c = copy[lang];
 
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
   }, [lang]);
 
-  const submit = (e: React.FormEvent) => {
+  const setField = (key: keyof typeof form, value: string) =>
+    setForm((prev) => ({ ...prev, [key]: value }));
+
+  const [submitting, setSubmitting] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const schema = z.object({
       name: z.string().trim().min(1, c.toast.name).max(100),
       email: z.string().trim().email(c.toast.email).max(255),
-      age: z.string().min(1, c.toast.age),
+      age: z
+        .union([z.string().trim().min(1, c.toast.age), z.number().min(1, c.toast.age)])
+        .transform((v) => String(v)),
     });
-    const r = schema.safeParse(form);
+    const r = schema.safeParse({ name: form.name, email: form.email, age: form.age });
     if (!r.success) {
       toast.error(r.error.issues[0]?.message ?? "请检查表单");
       return;
     }
-    toast.success(c.toast.success);
-    setForm({ name: "", email: "", age: "" });
+
+    setSubmitting(true);
+    try {
+      const payload = {
+        access_key: "e6f1d746-e786-4f5a-a458-c35798baa23f",
+        subject: "EduFlex 官网新试听预约",
+        课程: form.course || c.contact.fields.courseValue,
+        姓名: form.name,
+        邮箱: form.email,
+        年龄: form.age,
+        性别: form.gender,
+        所在国家与城市: form.location,
+        是否能够中文交流: form.chineseComm,
+        是否会拼音: form.pinyin,
+        中文程度: form.proficiency,
+        喜欢的老师类型: form.teacherType,
+        孩子的兴趣爱好: form.hobbies,
+        方便试课的时间范围: form.trialTime,
+      };
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        toast.success("预约已提交，我们将在24小时内联系您");
+        setForm({
+          course: "",
+          name: "",
+          email: "",
+          age: "",
+          gender: "",
+          location: "",
+          chineseComm: "",
+          pinyin: "",
+          proficiency: "",
+          teacherType: "",
+          hobbies: "",
+          trialTime: "",
+        });
+      } else {
+        toast.error("提交失败，请稍后重试");
+      }
+    } catch {
+      toast.error("网络异常，请稍后重试");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -191,20 +258,89 @@ export function Index() {
         {/* Contact */}
         <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
           <div className="rounded-[2rem] bg-primary px-6 py-14 shadow-soft md:px-16">
-            <div className="mx-auto max-w-xl text-center">
+            <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-3xl font-bold text-primary-foreground">{c.contact.heading}</h2>
               <p className="mt-3 text-sm text-primary-foreground/70">{c.contact.hint}</p>
             </div>
-            <form onSubmit={submit} className="mx-auto mt-10 grid max-w-xl gap-4">
-              <input className="field" placeholder={c.contact.name} maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-              <input className="field" type="email" placeholder={c.contact.email} maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-              <select className="field" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })}>
-                <option value="">{c.contact.agePlaceholder}</option>
-                {c.contact.ages.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-              <button type="submit" className="btn-cta mt-2 w-full">{c.contact.submit}</button>
+            <form onSubmit={submit} className="mx-auto mt-10 grid max-w-2xl gap-4 md:grid-cols-2">
+              {/* 课程（只读默认中文） */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.course}</span>
+                <input className="field opacity-70" readOnly value={form.course || c.contact.fields.courseValue} onChange={(e) => setField("course", e.target.value)} />
+              </label>
+              {/* 姓名 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.name}</span>
+                <input className="field" placeholder={c.contact.placeholders.name} maxLength={100} value={form.name} onChange={(e) => setField("name", e.target.value)} />
+              </label>
+              {/* 邮箱 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.email}</span>
+                <input className="field" type="email" placeholder={c.contact.placeholders.email} maxLength={255} value={form.email} onChange={(e) => setField("email", e.target.value)} />
+              </label>
+              {/* 年龄 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.age}</span>
+                <input className="field" type="number" min={0} max={120} placeholder={c.contact.placeholders.age} value={form.age} onChange={(e) => setField("age", e.target.value)} />
+              </label>
+              {/* 性别 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.gender}</span>
+                <select className="field" value={form.gender} onChange={(e) => setField("gender", e.target.value)}>
+                  <option value="">—</option>
+                  {c.contact.fields.genderOptions.map((o) => (
+                    <option key={o} value={o}>{o}</option>
+                  ))}
+                </select>
+              </label>
+              {/* 所在国家与城市 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.location}</span>
+                <input className="field" placeholder={c.contact.placeholders.location} maxLength={120} value={form.location} onChange={(e) => setField("location", e.target.value)} />
+              </label>
+              {/* 是否能够中文交流 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.chineseComm}</span>
+                <select className="field" value={form.chineseComm} onChange={(e) => setField("chineseComm", e.target.value)}>
+                  <option value="">—</option>
+                  {c.contact.fields.chineseCommOptions.map((o) => (
+                    <option key={o} value={o}>{o}</option>
+                  ))}
+                </select>
+              </label>
+              {/* 是否会拼音 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.pinyin}</span>
+                <select className="field" value={form.pinyin} onChange={(e) => setField("pinyin", e.target.value)}>
+                  <option value="">—</option>
+                  {c.contact.fields.pinyinOptions.map((o) => (
+                    <option key={o} value={o}>{o}</option>
+                  ))}
+                </select>
+              </label>
+              {/* 中文程度 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.proficiency}</span>
+                <input className="field" placeholder={c.contact.placeholders.proficiency} maxLength={200} value={form.proficiency} onChange={(e) => setField("proficiency", e.target.value)} />
+              </label>
+              {/* 喜欢的老师类型 */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.teacherType}</span>
+                <input className="field" placeholder={c.contact.placeholders.teacherType} maxLength={200} value={form.teacherType} onChange={(e) => setField("teacherType", e.target.value)} />
+              </label>
+              {/* 孩子的兴趣爱好（整行） */}
+              <label className="flex flex-col gap-1.5 md:col-span-2">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.hobbies}</span>
+                <textarea className="field min-h-[64px] resize-y" placeholder={c.contact.placeholders.hobbies} maxLength={500} value={form.hobbies} onChange={(e) => setField("hobbies", e.target.value)} />
+              </label>
+              {/* 方便试课的时间范围（整行） */}
+              <label className="flex flex-col gap-1.5 md:col-span-2">
+                <span className="text-xs font-semibold text-primary-foreground/80">{c.contact.fields.trialTime}</span>
+                <textarea className="field min-h-[64px] resize-y" placeholder={c.contact.placeholders.trialTime} maxLength={500} value={form.trialTime} onChange={(e) => setField("trialTime", e.target.value)} />
+              </label>
+              <button type="submit" disabled={submitting} className="btn-cta mt-2 w-full md:col-span-2 disabled:opacity-60">
+                {submitting ? "…" : c.contact.submit}
+              </button>
             </form>
           </div>
         </section>
