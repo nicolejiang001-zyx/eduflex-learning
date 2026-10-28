@@ -33,10 +33,34 @@ export interface PageCopy {
   contact: {
     heading: string;
     hint: string;
-    name: string;
-    email: string;
-    agePlaceholder: string;
-    ages: AgeOption[];
+    fields: {
+      course: string;
+      courseValue: string;
+      name: string;
+      email: string;
+      age: string;
+      gender: string;
+      genderOptions: string[];
+      location: string;
+      chineseComm: string;
+      chineseCommOptions: string[];
+      pinyin: string;
+      pinyinOptions: string[];
+      proficiency: string;
+      teacherType: string;
+      hobbies: string;
+      trialTime: string;
+    };
+    placeholders: {
+      name: string;
+      email: string;
+      age: string;
+      location: string;
+      proficiency: string;
+      teacherType: string;
+      hobbies: string;
+      trialTime: string;
+    };
     submit: string;
   };
   toast: { success: string; name: string; email: string; age: string };
@@ -80,22 +104,41 @@ const zh: PageCopy = {
   contact: {
     heading: "预约免费试听",
     hint: "留下信息，课程顾问将在 24 小时内联系您。",
-    name: "姓名",
-    email: "邮箱",
-    agePlaceholder: "选择年龄段",
-    ages: [
-      { value: "4-7", label: "4-7岁 · 低龄趣味启蒙" },
-      { value: "8-14", label: "8-14岁 · 中小学高效提升" },
-      { value: "15-18", label: "15-18岁 · 高阶中文与考级辅导" },
-      { value: "18+", label: "18岁+ · 成人实用与商务中文" },
-    ],
+    fields: {
+      course: "课程",
+      courseValue: "中文",
+      name: "姓名",
+      email: "邮箱",
+      age: "年龄（周岁）",
+      gender: "性别",
+      genderOptions: ["男", "女", "其它"],
+      location: "所在国家与城市",
+      chineseComm: "是否能够中文交流",
+      chineseCommOptions: ["完全不能", "简单日常听说", "流利交流"],
+      pinyin: "是否会拼音",
+      pinyinOptions: ["完全不会", "认识部分声韵母", "熟练拼读打字"],
+      proficiency: "中文程度",
+      teacherType: "喜欢的老师类型",
+      hobbies: "孩子的兴趣爱好",
+      trialTime: "方便试课的时间范围",
+    },
+    placeholders: {
+      name: "请填写姓名",
+      email: "用于接收试课确认",
+      age: "请填写年龄",
+      location: "如：澳大利亚·墨尔本",
+      proficiency: "如：海外中文学校三年级，或国内二年级水平",
+      teacherType: "如：亲和耐心、严谨幽默等",
+      hobbies: "便于老师课前破冰",
+      trialTime: "如：周六上午、平日墨尔本时间17:00后",
+    },
     submit: "立即预约",
   },
   toast: {
     success: "预约成功！我们将尽快与您联系。",
     name: "请填写姓名",
     email: "请输入有效邮箱",
-    age: "请选择年龄段",
+    age: "请填写年龄",
   },
   footer: "© 2026 EduFlex Learning 灵动教育",
 };
@@ -156,22 +199,41 @@ const en: PageCopy = {
   contact: {
     heading: "Book a Free Trial",
     hint: "Leave your details, and our course consultant will contact you within 24 hours.",
-    name: "Name",
-    email: "Email",
-    agePlaceholder: "Select Age Group",
-    ages: [
-      { value: "4-7", label: "Ages 4-7 · Fun Early Learning" },
-      { value: "8-14", label: "Ages 8-14 · Efficient Improvement" },
-      { value: "15-18", label: "Ages 15-18 · Advanced Chinese & Exam Prep" },
-      { value: "18+", label: "Ages 18+ · Practical & Business Chinese" },
-    ],
+    fields: {
+      course: "Course",
+      courseValue: "Chinese",
+      name: "Name",
+      email: "Email",
+      age: "Age (years)",
+      gender: "Gender",
+      genderOptions: ["Male", "Female", "Other"],
+      location: "Country & City",
+      chineseComm: "Can communicate in Chinese?",
+      chineseCommOptions: ["Not at all", "Simple daily conversation", "Fluent"],
+      pinyin: "Knows Pinyin?",
+      pinyinOptions: ["Not at all", "Knows some initials/finals", "Proficient in reading & typing"],
+      proficiency: "Chinese Proficiency Level",
+      teacherType: "Preferred Teacher Style",
+      hobbies: "Child's Hobbies & Interests",
+      trialTime: "Preferred Trial Lesson Times",
+    },
+    placeholders: {
+      name: "Enter name",
+      email: "For trial confirmation",
+      age: "Enter age",
+      location: "e.g. Australia · Melbourne",
+      proficiency: "e.g. Grade 3 at overseas Chinese school",
+      teacherType: "e.g. patient, fun, strict",
+      hobbies: "Helps the teacher break the ice",
+      trialTime: "e.g. Saturday mornings, after 5pm Melbourne time",
+    },
     submit: "Book Now",
   },
   toast: {
     success: "Booking received! We'll be in touch shortly.",
     name: "Please enter your name",
     email: "Please enter a valid email",
-    age: "Please select an age group",
+    age: "Please enter an age",
   },
   footer: "© 2026 EduFlex Learning",
 };
