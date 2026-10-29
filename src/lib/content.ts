@@ -54,12 +54,12 @@ export const copy: Record<Lang, PageCopy> = {
   zh: {
     nav: { features: "核心优势", director: "主理人的话", paths: "定制方向", contact: "预约试听" },
     hero: {
-      badge: "EduFlex 灵动教育 · 海外华裔青少儿与成人中文",
-      titleA: "因材施教，",
-      titleB1: "点燃孩子的",
+      badge: "EduFlex 灵动教育 · 海外青少儿与成人中文",
+      titleA: "个性化教育，",
+      titleB1: "点燃海外学生的",
       titleAccent: "中文兴趣",
       titleB2: "！",
-      desc: "100% 中国本土严选师资，专注海外华裔青少儿中文教育，以及成人实用中文提升。",
+      desc: "100% 中国本土严选师资，专注海外青少儿中文教育，以及成人实用中文提升。",
       cta: "获取免费专属试听",
     },
     features: [
@@ -79,7 +79,7 @@ export const copy: Record<Lang, PageCopy> = {
       label: "LEARNING PATHS",
       heading: "定制方向",
       list: [
-        { age: "4-7岁", title: "低龄趣味启蒙", desc: "专治“坐不住”。通过强互动与游戏化引导，把中文变成有趣的探索。" },
+        { age: "4-7岁", title: "趣味启蒙", desc: "专治“坐不住”。通过强互动与游戏化引导，把中文变成有趣的探索。" },
         { age: "8-12岁", title: "中小学高效提升", desc: "专治“学了忘、写作难”。拒绝死记硬背，梳理底层逻辑，攻克阅读与写作难关。" },
         { age: "13-18岁", title: "高阶中文与考级辅导", desc: "兼顾语言深造与考级需求。针对 VCE、AP 及 HSK 提供高质量查漏补缺与作文精批，助力冲刺高分。" },
         { age: "18岁+", title: "成人实用与商务中文", desc: "根据真实生活与职业规划量身定制。跳过死板教科书，直接匹配实用场景，让每一次开口都成为加分项。" },
