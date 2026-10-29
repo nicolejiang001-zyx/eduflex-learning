@@ -1,7 +1,12 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { copy, type Lang } from "@/lib/content";
 
-export default function IndexPage() {
+export const Route = createFileRoute("/")({
+  component: IndexPage,
+});
+
+function IndexPage() {
   const [lang, setLang] = useState<Lang>("zh");
   const t = copy[lang];
 
@@ -180,7 +185,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-      {/* 预约试听表单 (6个精简核心字段) */}
+      {/* 预约试听表单 */}
       <section id="contact" className="px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-xl rounded-3xl border border-border bg-card p-8 shadow-md sm:p-10">
           <div className="text-center">
