@@ -87,10 +87,10 @@ function IndexPage() {
     <div className="min-h-screen bg-background font-sans text-foreground">
       {/* 顶部导航 */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-2 sm:px-6">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="EduFlex Learning" className="h-[240px] w-auto object-contain" />
-            <span className="h-20 w-px bg-border" aria-hidden="true" />
+            <img src="/logo.png" alt="EduFlex Learning" className="h-[120px] w-auto object-contain" />
+            <span className="h-12 w-px bg-border" aria-hidden="true" />
             <span className="font-display text-xl font-bold tracking-wide text-primary">灵动教育</span>
           </div>
 
