@@ -11,11 +11,6 @@ export interface PathCopy {
   desc: string;
 }
 
-export interface AgeOption {
-  value: string;
-  label: string;
-}
-
 export interface PageCopy {
   nav: { features: string; director: string; paths: string; contact: string };
   hero: {
@@ -34,208 +29,150 @@ export interface PageCopy {
     heading: string;
     hint: string;
     fields: {
-      course: string;
-      courseValue: string;
       name: string;
       email: string;
-      age: string;
-      gender: string;
-      genderOptions: string[];
+      ageGroup: string;
+      ageGroupOptions: string[];
       location: string;
-      chineseComm: string;
-      chineseCommOptions: string[];
-      pinyin: string;
-      pinyinOptions: string[];
-      proficiency: string;
-      teacherType: string;
-      hobbies: string;
+      chineseLevel: string;
       trialTime: string;
     };
     placeholders: {
       name: string;
       email: string;
-      age: string;
       location: string;
-      proficiency: string;
-      teacherType: string;
-      hobbies: string;
+      chineseLevel: string;
       trialTime: string;
     };
     submit: string;
   };
-  toast: { success: string; name: string; email: string; age: string };
+  toast: { name: string; email: string; ageGroup: string };
   footer: string;
 }
 
-const zh: PageCopy = {
-  nav: { features: "核心优势", director: "主理人的话", paths: "定制方向", contact: "预约试听" },
-  hero: {
-    badge: "海外华裔青少儿 · 成人中文学习",
-    titleA: "量身定制专属方案，",
-    titleB1: "让孩子",
-    titleAccent: "自信开口",
-    titleB2: "说中文！",
-    desc: "100% 中国本土严选师资，专注海外华裔青少儿中文教育，兼顾成人专属定制。",
-    cta: "获取免费专属试听",
-  },
-  features: [
-    { title: "100% 满意承诺", desc: "拒绝试课套路。不满意无限次免费试，直到遇见专属好老师。" },
-    { title: "全球经验 本土严选", desc: "100% 中国本土严选师资，深谙海外孩子痛点，发音纯正。" },
-    { title: "按需购课 零捆绑", desc: "课前15分钟免费取消。不强制推销大课包，随学随退。" },
-    { title: "拒绝“水土不服”", desc: "精选《轻松学中文》《HSK》等实用教材。支持自带教材，100% 无缝定制。" },
-  ],
-  director: {
-    eyebrow: "MESSAGE FROM THE DIRECTOR",
-    vertical: "主理人的话",
-    heading: "教育的质量，藏在看不见的细节里。",
-    body: "你好，我是 EduFlex 的主理人。在 EduFlex，“个性化”绝不是空话。每一份量身定制的学习计划，都是我和前线老师反复打磨的成果。您的孩子，由我亲自负责质量把关。",
-    sign: "EduFlex 主理人",
-  },
-  paths: {
-    label: "LEARNING PATHS",
-    heading: "定制方向",
-    list: [
-      { age: "4-7岁", title: "低龄趣味启蒙", desc: "专治“坐不住”。通过强互动与游戏化引导，把中文变成有趣的探索。" },
-      { age: "8-14岁", title: "中小学高效提升", desc: "专治“学了忘、写作难”。拒绝死记硬背，梳理底层逻辑，攻克阅读与写作难关。" },
-      { age: "15-18岁", title: "高阶中文与考级辅导", desc: "兼顾语言深造与考级需求。针对 VCE、AP 及 HSK 提供高质量查漏补缺与作文精批，助力冲刺高分。" },
-      { age: "18岁+", title: "成人实用与商务中文", desc: "根据真实生活与职业规划量身定制。跳过死板教科书，直接匹配实用场景，让每一次开口都成为加分项。" },
-    ],
-  },
-  contact: {
-    heading: "预约免费试听",
-    hint: "留下信息，课程顾问将在 24 小时内联系您。",
-    fields: {
-      course: "课程",
-      courseValue: "中文",
-      name: "姓名",
-      email: "邮箱",
-      age: "年龄（周岁）",
-      gender: "性别",
-      genderOptions: ["男", "女", "其它"],
-      location: "所在国家与城市",
-      chineseComm: "是否能够中文交流",
-      chineseCommOptions: ["完全不能", "简单日常听说", "流利交流"],
-      pinyin: "是否会拼音",
-      pinyinOptions: ["完全不会", "认识部分声韵母", "熟练拼读打字"],
-      proficiency: "中文程度",
-      teacherType: "喜欢的老师类型",
-      hobbies: "孩子的兴趣爱好",
-      trialTime: "方便试课的时间范围",
+export const copy: Record<Lang, PageCopy> = {
+  zh: {
+    nav: { features: "核心优势", director: "主理人的话", paths: "定制方向", contact: "预约试听" },
+    hero: {
+      badge: "EduFlex 灵动教育 · 海外华裔青少儿与成人中文",
+      titleA: "因材施教，",
+      titleB1: "点燃孩子的",
+      titleAccent: "中文兴趣",
+      titleB2: "！",
+      desc: "100% 中国本土严选师资，专注海外华裔青少儿中文教育，以及成人实用中文提升。",
+      cta: "获取免费专属试听",
     },
-    placeholders: {
+    features: [
+      { title: "100% 满意承诺", desc: "拒绝试课套路。不满意无限次免费试，直到遇见专属好老师。" },
+      { title: "全球经验 本土严选", desc: "100% 中国本土严选师资，深谙海外孩子痛点，发音纯正。" },
+      { title: "20节轻量起步 · 零大包负担", desc: "拒绝动辄上百节的大课包捆绑。支持20节课灵活起步，课前15分钟免费取消，余课随时可退。" },
+      { title: "拒绝“水土不服”", desc: "精选《轻松学中文》《HSK》等实用教材。支持自带教材，100% 无缝定制。" },
+    ],
+    director: {
+      eyebrow: "主理人的话",
+      vertical: "秉持初心 · 因材施教",
+      heading: "教育的质量，藏在看不见的细节里。",
+      body: "你好，我是 EduFlex 的主理人。在 EduFlex，“个性化”绝不是空话。每一份量身定制的学习计划，都是我和前线老师反复打磨的成果。您的孩子，由我亲自负责质量把关。",
+      sign: "EduFlex 主理人",
+    },
+    paths: {
+      label: "LEARNING PATHS",
+      heading: "定制方向",
+      list: [
+        { age: "4-7岁", title: "低龄趣味启蒙", desc: "专治“坐不住”。通过强互动与游戏化引导，把中文变成有趣的探索。" },
+        { age: "8-12岁", title: "中小学高效提升", desc: "专治“学了忘、写作难”。拒绝死记硬背，梳理底层逻辑，攻克阅读与写作难关。" },
+        { age: "13-18岁", title: "高阶中文与考级辅导", desc: "兼顾语言深造与考级需求。针对 VCE、AP 及 HSK 提供高质量查漏补缺与作文精批，助力冲刺高分。" },
+        { age: "18岁+", title: "成人实用与商务中文", desc: "根据真实生活与职业规划量身定制。跳过死板教科书，直接匹配实用场景，让每一次开口都成为加分项。" },
+      ],
+    },
+    contact: {
+      heading: "预约免费试听",
+      hint: "留下信息，课程顾问将在 24 小时内联系您。",
+      fields: {
+        name: "姓名",
+        email: "邮箱",
+        ageGroup: "年龄段",
+        ageGroupOptions: ["4-7 岁", "8-12 岁", "13-15 岁", "16-18 岁", "18+ 岁"],
+        location: "所在国家与城市",
+        chineseLevel: "当前中文听说与水平",
+        trialTime: "方便试课的时间范围",
+      },
+      placeholders: {
+        name: "请填写姓名",
+        email: "用于接收试课确认",
+        location: "如：澳大利亚·墨尔本",
+        chineseLevel: "如：零基础 / 无法完全中文对话 / 中文学校一年级等",
+        trialTime: "如：周六上午、平日墨尔本时间17:00后",
+      },
+      submit: "立即预约",
+    },
+    toast: {
       name: "请填写姓名",
-      email: "用于接收试课确认",
-      age: "请填写年龄",
-      location: "如：澳大利亚·墨尔本",
-      proficiency: "如：海外中文学校三年级，或国内二年级水平",
-      teacherType: "如：亲和耐心、严谨幽默等",
-      hobbies: "便于老师课前破冰",
-      trialTime: "如：周六上午、平日墨尔本时间17:00后",
+      email: "请填写有效邮箱",
+      ageGroup: "请选择年龄段",
     },
-    submit: "立即预约",
+    footer: "© 2026 EduFlex Learning 灵动教育",
   },
-  toast: {
-    success: "预约成功！我们将尽快与您联系。",
-    name: "请填写姓名",
-    email: "请输入有效邮箱",
-    age: "请填写年龄",
-  },
-  footer: "© 2026 EduFlex Learning 灵动教育",
-};
-
-const en: PageCopy = {
-  nav: { features: "Why Us", director: "Director's Message", paths: "Learning Paths", contact: "Book a Trial" },
-  hero: {
-    badge: "Overseas Chinese Families · Adult Programs",
-    titleA: "Tailored Learning Plans:",
-    titleB1: "Empowering Your Child to ",
-    titleAccent: "Speak Chinese with Confidence",
-    titleB2: "!",
-    desc: "100% Premium Native Teachers. Specialized in Chinese Education for Overseas Youth, with Custom Adult Programs.",
-    cta: "Get Your Free Trial Lesson",
-  },
-  features: [
-    { title: "100% Satisfaction Guarantee", desc: "No gimmicks. Unlimited free trials until you find the perfect teacher." },
-    { title: "Premium Native Teachers", desc: "Carefully selected native teachers who understand the challenges of overseas learners. Authentic pronunciation." },
-    { title: "Pay-As-You-Go, Zero Lock-in", desc: "Free cancellation up to 15 mins before class. No forced large packages. Learn on your terms." },
-    {
-      title: "Practical, Tailored Materials",
-      desc: "Featuring practical textbooks like \"Easy Steps to Chinese\" and HSK. Bring your own materials for 100% seamless customization.",
+  en: {
+    nav: { features: "Why EduFlex", director: "Director", paths: "Paths", contact: "Book Trial" },
+    hero: {
+      badge: "EduFlex Learning · Chinese for Global Heritage Kids & Adults",
+      titleA: "Tailored Teaching, ",
+      titleB1: "Inspiring a ",
+      titleAccent: "Lifelong Love",
+      titleB2: " for Chinese.",
+      desc: "Top-tier native teachers in China, tailored for overseas youth and practical Chinese advancement for adults.",
+      cta: "Book Free Trial",
     },
-  ],
-  director: {
-    eyebrow: "MESSAGE FROM THE DIRECTOR",
-    vertical: "EDUFLEX",
-    heading: "The quality of education lies in the unseen details.",
-    body: "Hello, I'm the Director of EduFlex. Here, \"personalized learning\" is more than just a buzzword. Every tailored study plan is the result of careful collaboration between me and our frontline teachers. I personally guarantee the quality of your child's education.",
-    sign: "Director of EduFlex",
-  },
-  paths: {
-    label: "LEARNING PATHS",
-    heading: "Learning Paths",
-    list: [
-      {
-        age: "Ages 4-7",
-        title: "Fun Early Learning",
-        desc: "Curing the \"can't sit still\". Transforming Chinese into an exciting exploration through high interactivity and gamified guidance.",
-      },
-      {
-        age: "Ages 8-14",
-        title: "Efficient Improvement",
-        desc: "Solving \"forgetting quickly\" and \"struggling to write\". No rote memorization. We build foundational logic to conquer reading and writing challenges.",
-      },
-      {
-        age: "Ages 15-18",
-        title: "Advanced Chinese & Exam Prep",
-        desc: "Balancing language mastery and exam needs. High-quality tutoring and essay grading for VCE, AP, and HSK to help you achieve top scores.",
-      },
-      {
-        age: "Ages 18+",
-        title: "Practical & Business Chinese",
-        desc: "Tailored to your real life and career goals. Skip rigid textbooks. We match practical scenarios so every conversation adds value to your life.",
-      },
+    features: [
+      { title: "100% Satisfaction", desc: "Free trial until you meet the perfect match. No strings attached." },
+      { title: "Native & Experienced", desc: "Strictly vetted native teachers with extensive international teaching experience." },
+      { title: "Flexible Packs, No Lock-in", desc: "Say goodbye to 100+ lesson bulk traps. Start easily with just 20 lessons. Cancel free up to 15 mins prior, refund remaining credits anytime." },
+      { title: "Curriculum That Fits", desc: "Proven series like Chinese Made Easy & HSK, or bring your own textbook." },
     ],
-  },
-  contact: {
-    heading: "Book a Free Trial",
-    hint: "Leave your details, and our course consultant will contact you within 24 hours.",
-    fields: {
-      course: "Course",
-      courseValue: "Chinese",
-      name: "Name",
-      email: "Email",
-      age: "Age (years)",
-      gender: "Gender",
-      genderOptions: ["Male", "Female", "Other"],
-      location: "Country & City",
-      chineseComm: "Can communicate in Chinese?",
-      chineseCommOptions: ["Not at all", "Simple daily conversation", "Fluent"],
-      pinyin: "Knows Pinyin?",
-      pinyinOptions: ["Not at all", "Knows some initials/finals", "Proficient in reading & typing"],
-      proficiency: "Chinese Proficiency Level",
-      teacherType: "Preferred Teacher Style",
-      hobbies: "Child's Hobbies & Interests",
-      trialTime: "Preferred Trial Lesson Times",
+    director: {
+      eyebrow: "MESSAGE FROM THE DIRECTOR",
+      vertical: "HEART · EXCELLENCE",
+      heading: "True quality is built in the details.",
+      body: "Hello, I am the founder of EduFlex. Here, 'tailored' is never a buzzword. Every learning plan is carefully curated by our team and myself.",
+      sign: "EduFlex Director",
     },
-    placeholders: {
-      name: "Enter name",
-      email: "For trial confirmation",
-      age: "Enter age",
-      location: "e.g. Australia · Melbourne",
-      proficiency: "e.g. Grade 3 at overseas Chinese school",
-      teacherType: "e.g. patient, fun, strict",
-      hobbies: "Helps the teacher break the ice",
-      trialTime: "e.g. Saturday mornings, after 5pm Melbourne time",
+    paths: {
+      label: "LEARNING PATHS",
+      heading: "Tailored Programs",
+      list: [
+        { age: "Age 4-7", title: "Playful Starter", desc: "Interactive and game-based learning designed for short attention spans." },
+        { age: "Age 8-12", title: "Primary & Middle School", desc: "Systematic learning focusing on reading, comprehension, and practical writing." },
+        { age: "Age 13-18", title: "Exam & Advanced Prep", desc: "Tailored support for VCE, AP, and HSK test-takers with essay feedback." },
+        { age: "18+", title: "Adults & Business", desc: "Practical conversational and professional Chinese designed for your goals." },
+      ],
     },
-    submit: "Book Now",
+    contact: {
+      heading: "Book Your Free Trial",
+      hint: "Leave your info and our advisor will reach out within 24 hours.",
+      fields: {
+        name: "Name",
+        email: "Email",
+        ageGroup: "Age Group",
+        ageGroupOptions: ["4-7", "8-12", "13-15", "16-18", "18+"],
+        location: "Country & City",
+        chineseLevel: "Current Chinese Level",
+        trialTime: "Preferred Trial Time",
+      },
+      placeholders: {
+        name: "Your name",
+        email: "For trial confirmation",
+        location: "e.g. Melbourne, Australia",
+        chineseLevel: "e.g. Beginner / Conversational / Grade 1 weekend school",
+        trialTime: "e.g. Saturday morning, Weekday after 5pm",
+      },
+      submit: "Book Now",
+    },
+    toast: {
+      name: "Please enter your name",
+      email: "Please enter a valid email",
+      ageGroup: "Please select an age group",
+    },
+    footer: "© 2026 EduFlex Learning",
   },
-  toast: {
-    success: "Booking received! We'll be in touch shortly.",
-    name: "Please enter your name",
-    email: "Please enter a valid email",
-    age: "Please enter an age",
-  },
-  footer: "© 2026 EduFlex Learning",
 };
-
-export const copy: Record<Lang, PageCopy> = { zh, en };
