@@ -73,7 +73,7 @@ export const copy: Record<Lang, PageCopy> = {
       vertical: "秉持初心 · 因材施教",
       heading: "教育的质量，藏在看不见的细节里。",
       body: "你好，我是 EduFlex 的主理人。在 EduFlex，“个性化”绝不是空话。每一份量身定制的学习计划，都是我和前线老师反复打磨的成果。您的孩子，由我亲自负责质量把关。",
-      sign: "EduFlex 主理人",
+      sign: "Nicole 老师 · EduFlex 教学负责人",
     },
     paths: {
       label: "LEARNING PATHS",
@@ -134,8 +134,8 @@ export const copy: Record<Lang, PageCopy> = {
       eyebrow: "MESSAGE FROM THE DIRECTOR",
       vertical: "HEART · EXCELLENCE",
       heading: "True quality is built in the details.",
-      body: "Hello, I am the founder of EduFlex. Here, 'tailored' is never a buzzword. Every learning plan is carefully curated by our team and myself.",
-      sign: "EduFlex Director",
+      body: "Hello, thank you for visiting EduFlex. Here, 'tailored' is never a buzzword. Every learning plan is carefully curated by our team and myself. Your child's learning journey is personally overseen by me.",
+      sign: "Nicole Jiang · Academic Director",
     },
     paths: {
       label: "LEARNING PATHS",
